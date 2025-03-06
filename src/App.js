@@ -10,10 +10,11 @@ import {
 import { AuthProvider } from './context/AuthContext';
 import { useAuth } from './context/AuthContext';
 
-// Import Pages/Components
+// Import Components
 import Login from './components/Login/Login';
 import Dashboard from './components/Dashboard/Dashboard';
 import NotFound from './pages/NotFound';
+import Layout from './components/Layout/Layout';
 
 // Private Route Component
 const PrivateRoute = () => {
@@ -26,11 +27,13 @@ const PrivateRoute = () => {
   return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />;
 };
 
-// Public Route Component (for login)
-const PublicRoute = () => {
-  const { isAuthenticated } = useAuth();
-
-  return !isAuthenticated ? <Outlet /> : <Navigate to="/dashboard" replace />;
+// Layout Route for authenticated routes
+const LayoutRoute = () => {
+  return (
+    <Layout>
+      <Outlet />
+    </Layout>
+  );
 };
 
 function App() {
@@ -39,19 +42,22 @@ function App() {
       <Router>
         <Routes>
           {/* Public Routes */}
-          <Route element={<PublicRoute />}>
-            <Route path="/login" element={<Login />} />
-          </Route>
+          <Route path="/login" element={<Login />} />
 
-          {/* Private Routes */}
+          {/* Private Routes with Layout */}
           <Route element={<PrivateRoute />}>
-            <Route path="/dashboard" element={<Dashboard />} />
-            
-            {/* Default route for authenticated users */}
-            <Route 
-              path="/" 
-              element={<Navigate to="/dashboard" replace />} 
-            />
+            <Route element={<LayoutRoute />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/campaigns" element={<div>Campaigns Page</div>} />
+              <Route path="/flows" element={<div>Flows Page</div>} />
+              <Route path="/integrations" element={<div>Integrations Page</div>} />
+              <Route path="/customers" element={<div>Customers Page</div>} />
+              <Route path="/settings" element={<div>Settings Page</div>} />
+              <Route path="/team" element={<div>Team Page</div>} />
+              
+              {/* Default route for authenticated users */}
+              <Route path="/" element={<Navigate to="/dashboard" replace />} />
+            </Route>
           </Route>
 
           {/* 404 Not Found */}

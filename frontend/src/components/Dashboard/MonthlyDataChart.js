@@ -25,13 +25,14 @@ const MonthlyDataChart = () => {
   const [monthlyData, setMonthlyData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [timeframe, setTimeframe] = useState('6 months');
 
   useEffect(() => {
     const fetchMonthlyData = async () => {
       try {
         // Fetch monthly data from the API
         const response = await axios.get('http://localhost:8000/api/monthly');
-        
+
         if (response.data && response.data.length > 0) {
           setMonthlyData(response.data);
         }
@@ -46,13 +47,25 @@ const MonthlyDataChart = () => {
     fetchMonthlyData();
   }, []);
 
+  // Filter data based on selected timeframe
+  const getFilteredData = () => {
+    if (timeframe === '3 months') {
+      return monthlyData.slice(-3);
+    } else if (timeframe === '6 months') {
+      return monthlyData.slice(-6);
+    }
+    return monthlyData.slice(-6); // Default to 6 months
+  };
+
+  const filteredData = getFilteredData();
+
   // Prepare data for Chart.js with the requested colors
   const chartData = {
-    labels: monthlyData.map(data => data.month),
+    labels: filteredData.map(data => data.month),
     datasets: [
       {
         label: 'Last Year',
-        data: monthlyData.map(data => data.last_year),
+        data: filteredData.map(data => data.last_year),
         backgroundColor: '#7FFFD4', // Aquamarine color for last year
         borderColor: '#5ECFB4',
         borderWidth: 1,
@@ -62,7 +75,7 @@ const MonthlyDataChart = () => {
       },
       {
         label: 'This Year',
-        data: monthlyData.map(data => data.this_year),
+        data: filteredData.map(data => data.this_year),
         backgroundColor: '#007FFF', // Azure color for this year
         borderColor: '#0065CC',
         borderWidth: 1,
@@ -78,21 +91,10 @@ const MonthlyDataChart = () => {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: 'top',
-        align: 'end',
-        labels: {
-          boxWidth: 12,
-          usePointStyle: true,
-          pointStyle: 'rectRounded',
-          padding: 20,
-          font: {
-            family: "'Inter', sans-serif",
-            size: 12
-          }
-        }
+        display: false, // Hide Chart.js built-in legend
       },
       title: {
-        display: false, // Removed title as requested
+        display: false,
       },
       tooltip: {
         backgroundColor: 'rgba(255, 255, 255, 0.9)',
@@ -114,7 +116,7 @@ const MonthlyDataChart = () => {
         boxPadding: 3,
         usePointStyle: true,
         callbacks: {
-          label: function(context) {
+          label: function (context) {
             let label = context.dataset.label || '';
             if (label) {
               label += ': ';
@@ -156,7 +158,8 @@ const MonthlyDataChart = () => {
           },
           color: '#6B7280',
           padding: 10,
-          callback: function(value) {
+          stepSize: 5000, // Set step size to 5000 as requested
+          callback: function (value) {
             return new Intl.NumberFormat('en-US', {
               notation: 'compact',
               compactDisplay: 'short'
@@ -182,6 +185,8 @@ const MonthlyDataChart = () => {
     }
   };
 
+  const timeframeOptions = ['3 months', '6 months'];
+
   if (loading) {
     return (
       <div className="bg-white rounded-lg shadow-md p-6 animate-pulse">
@@ -204,8 +209,8 @@ const MonthlyDataChart = () => {
           <p className="font-medium">Error Loading Data</p>
         </div>
         <p className="mt-2 text-sm">{error}</p>
-        <button 
-          onClick={() => window.location.reload()} 
+        <button
+          onClick={() => window.location.reload()}
           className="mt-3 bg-red-600 text-white px-4 py-2 rounded text-sm font-medium hover:bg-red-700 transition duration-200"
         >
           Refresh Data
@@ -229,15 +234,61 @@ const MonthlyDataChart = () => {
   }
 
   return (
-    <div className="bg-white p-6">
+    <div className="bg-white px-6">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-semibold text-gray-800">Comparison</h2>
-        <div className="text-sm text-gray-500">
-          Year to date
+        <div className="relative flex items-center">
+          {/* Select Wrapper to maintain full-rounded look */}
+          <div className="relative w-full rounded-full overflow-hidden border border-gray-300 bg-white">
+            <select
+              value={timeframe}
+              onChange={(e) => setTimeframe(e.target.value)}
+              className="appearance-none w-full bg-white text-gray-700 font-medium text-md py-2 px-4 pr-10 rounded-full focus:outline-none"
+            >
+              {timeframeOptions.map((option) => (
+                <option
+                  key={option}
+                  value={option}
+                  className="bg-white text-gray-700 font-medium hover:bg-gray-100 px-3 py-2"
+                >
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Dropdown Icon */}
+          <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+            <svg
+              className="w-4 h-4 text-gray-500"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </div>
         </div>
+
       </div>
       <div className="h-80">
         <Bar data={chartData} options={chartOptions} />
+      </div>
+
+      {/* Custom Legend - Center positioned with square color indicators */}
+      <div className="mt-4 flex justify-center items-center">
+        <div className="flex items-center mr-6">
+          <div className="w-4 h-4 bg-[#7FFFD4] mr-2"></div>
+          <span className="text-sm text-gray-700">Last Year</span>
+        </div>
+        <div className="flex items-center">
+          <div className="w-4 h-4 bg-[#007FFF] mr-2"></div>
+          <span className="text-sm text-gray-700">This Year</span>
+        </div>
       </div>
     </div>
   );

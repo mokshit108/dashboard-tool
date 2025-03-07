@@ -18,7 +18,7 @@ const Dashboard = () => {
             <div className="pb-2 px-4 mb-4">
               <FinancialSummary />
             </div>
-            <div className="border-b pb-4 mb-4">
+            <div className="pb-4 mb-4">
               <MonthlyDataChart />
             </div>
             <div className="px-4 pb-2">

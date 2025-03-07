@@ -2,12 +2,12 @@ const DataModel = require('../models/dataModel');
 
 const seedData = async () => {
   const monthlyData = [
-    { month: 'Jan', lastYear: 5000, thisYear: 6000 },
-    { month: 'Feb', lastYear: 10000, thisYear: 2000 },
-    { month: 'Mar', lastYear: 2000, thisYear: 40000 },
-    { month: 'Apr', lastYear: 3200, thisYear: 21000 },
-    { month: 'May', lastYear: 12000, thisYear: 9200 },
-    { month: 'Jun', lastYear: 13000, thisYear: 8700 }
+    { month: 'Jan', lastYear: 3000, thisYear: 8000 },
+    { month: 'Feb', lastYear: 7000, thisYear: 12000 },
+    { month: 'Mar', lastYear: 4000, thisYear: 8000 },
+    { month: 'Apr', lastYear: 18000, thisYear: 20000 },
+    { month: 'May', lastYear: 8000, thisYear: 15000 },
+    { month: 'Jun', lastYear: 4000, thisYear: 8000 }
   ];
 
   const productData = [

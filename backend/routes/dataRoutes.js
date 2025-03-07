@@ -21,5 +21,12 @@ router.post('/performance', DataController.addPerformanceData);
 router.get('/sales', DataController.getSalesData);
 router.post('/sales', DataController.addSalesData);
 
+// Feedback routes
+router.get('/feedback', DataController.getFeedback);
+router.post('/feedback', DataController.addFeedback);
+
+// Product data routes
+router.get('/products', DataController.getProductData);
+router.post('/products', DataController.addProductData);
 
 module.exports = router;

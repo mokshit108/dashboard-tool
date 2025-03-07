@@ -179,6 +179,93 @@ async addSalesData(req, res) {
   }
 }
 
+// Get Feedback Data
+async getFeedback(req, res) {
+  try {
+    const result = await DataModel.getFeedback();
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "No feedback data found" });
+    }
+
+    res.status(200).json(result.rows);
+  } catch (error) {
+    console.error('Error getting feedback data:', error);
+    res.status(500).json({ error: error.message });
+  }
+}
+
+// Add Feedback Data
+async addFeedback(req, res) {
+  try {
+    const { customer_name, feedback_text, sentiment, date } = req.body;
+
+    if (!customer_name || !feedback_text || !sentiment || !date) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
+    // Validate sentiment value
+    if (!['positive', 'neutral', 'negative'].includes(sentiment)) {
+      return res.status(400).json({ 
+        message: "Invalid sentiment value. Must be 'positive', 'neutral', or 'negative'"
+      });
+    }
+
+    const result = await DataModel.addFeedback({
+      customer_name,
+      feedback_text,
+      sentiment,
+      date
+    });
+
+    res.status(201).json(result.rows[0]);
+  } catch (error) {
+    console.error('Error adding feedback data:', error);
+    res.status(500).json({ error: error.message });
+  }
+}
+
+// Get Product Data
+async getProductData(req, res) {
+  try {
+    const result = await DataModel.getAllProductData();
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "No product data found" });
+    }
+
+    res.status(200).json(result.rows);
+  } catch (error) {
+    console.error('Error getting product data:', error);
+    res.status(500).json({ error: error.message });
+  }
+}
+
+// Add Product Data
+async addProductData(req, res) {
+  try {
+    const { product, soldAmount, unitPrice, revenue, rating } = req.body;
+
+    if (!product || soldAmount === undefined || unitPrice === undefined || 
+        revenue === undefined || rating === undefined) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
+    const result = await DataModel.addProductData({
+      product,
+      soldAmount,
+      unitPrice,
+      revenue,
+      rating
+    });
+
+    res.status(201).json(result.rows[0]);
+  } catch (error) {
+    console.error('Error adding product data:', error);
+    res.status(500).json({ error: error.message });
+  }
+}
+
 }
 
 module.exports = new DataController();

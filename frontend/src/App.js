@@ -7,25 +7,12 @@ import {
   Navigate, 
   Outlet 
 } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
-import { useAuth } from './context/AuthContext';
 
-// Import Components
-import Login from './components/Login/Login';
 import Dashboard from './components/Dashboard/Dashboard';
 import NotFound from './pages/NotFound';
 import Layout from './components/Layout/Layout';
 
-// Private Route Component
-const PrivateRoute = () => {
-  const { isAuthenticated, loading } = useAuth();
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />;
-};
 
 // Layout Route for authenticated routes
 const LayoutRoute = () => {
@@ -38,14 +25,12 @@ const LayoutRoute = () => {
 
 function App() {
   return (
-    <AuthProvider>
+  
       <Router>
         <Routes>
-          {/* Public Routes */}
-          <Route path="/login" element={<Login />} />
 
           {/* Private Routes with Layout */}
-          <Route element={<PrivateRoute />}>
+          <Route>
             <Route element={<LayoutRoute />}>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/campaigns" element={<div>Campaigns Page</div>} />
@@ -64,7 +49,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
-    </AuthProvider>
+   
   );
 }
 

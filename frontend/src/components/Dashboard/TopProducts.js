@@ -46,7 +46,7 @@ const TopProducts = () => {
   if (error) return <div className="p-4 text-red-500">Error: {error}</div>;
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-4 mb-6">
+    <div className="bg-white p-4 mb-6">
       <h2 className="text-xl font-bold mb-4">Top Products</h2>
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">

@@ -8,15 +8,23 @@ import TopProducts from './TopProducts';
 
 const Dashboard = () => {
   return (
-    <div className="container mx-auto px-4 py-1">
-      <h1 className="text-2xl font-bold mb-6">Dashboard</h1>
+    <div className="container">
 
       {/* Financial Summary and Performance Meter side by side */}
       <div className="flex flex-wrap">
         <div className="w-full lg:w-3/4 pr-0 lg:pr-4">
-          <FinancialSummary />
-          <MonthlyDataChart />
-          <TopProducts />
+          {/* Single card wrapper for the three components */}
+          <div className="bg-white rounded-lg shadow-md pl-4 pt-4 pr-4 mb-6">
+            <div className="pb-2 px-4 mb-4">
+              <FinancialSummary />
+            </div>
+            <div className="border-b pb-4 mb-4">
+              <MonthlyDataChart />
+            </div>
+            <div className="px-4 pb-2">
+              <TopProducts />
+            </div>
+          </div>
         </div>
         <div className="w-full lg:w-1/4 mt-4 lg:mt-0">
           <PerformanceMeter />

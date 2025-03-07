@@ -229,7 +229,7 @@ const MonthlyDataChart = () => {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
+    <div className="bg-white p-6">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-semibold text-gray-800">Comparison</h2>
         <div className="text-sm text-gray-500">

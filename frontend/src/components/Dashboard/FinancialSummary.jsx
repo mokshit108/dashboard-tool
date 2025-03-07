@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { FaArrowTrendUp } from "react-icons/fa6";
+import { FaArrowTrendDown } from "react-icons/fa6";
 
 const FinancialSummary = () => {
   const [financialData, setFinancialData] = useState({
@@ -10,9 +12,9 @@ const FinancialSummary = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [percentChange, setPercentChange] = useState({
-    purchases: '+2.5%',
-    revenue: '+4.3%',
-    refunds: '+0.8%'
+    purchases: '+32%',
+    revenue: '+49%',
+    refunds: '+7%'
   });
 
   useEffect(() => {
@@ -50,6 +52,38 @@ const FinancialSummary = () => {
     }).format(value);
   };
 
+  // Format numbers with K for thousands
+  const formatNumberWithK = (num) => {
+    if (num >= 1000) {
+      return (num / 1000).toFixed(0) + 'K';
+    }
+    return num.toString();
+  };
+
+  // Format currency with K for thousands
+  const formatCurrencyWithK = (value) => {
+    if (value >= 1000) {
+      return '$' + (value / 1000) + 'K';
+    }
+    return '$' + value.toString();
+  };
+
+  // Helper function to determine badge color based on value and type
+  const getBadgeColor = (value, type) => {
+    // Always make refunds red regardless of value
+    if (type === 'refunds') {
+      return 'bg-red-100 text-red-600';
+    }
+    
+    if (value.startsWith('+')) {
+      return 'bg-green-100 text-green-600';
+    } else if (value.startsWith('-')) {
+      return 'bg-red-100 text-red-600';
+    } else {
+      return 'bg-gray-100 text-gray-600';
+    }
+  };
+
   if (loading) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
@@ -57,7 +91,6 @@ const FinancialSummary = () => {
           <div key={item} className="bg-white rounded-lg shadow p-6 animate-pulse">
             <div className="h-4 bg-gray-200 rounded w-1/4 mb-4"></div>
             <div className="h-8 bg-gray-200 rounded w-1/2 mb-2"></div>
-            <div className="h-4 bg-gray-200 rounded w-3/4"></div>
           </div>
         ))}
       </div>
@@ -80,52 +113,57 @@ const FinancialSummary = () => {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+    <>
+    <h1 className="text-2xl font-bold mb-6">Dashboard</h1>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+      
       {/* Purchases Card */}
-      <div className="bg-white rounded-lg shadow p-6">
-        <div className="flex items-center justify-between">
-          <h3 className="text-gray-500 text-sm font-medium">Purchases</h3>
-          <div className="p-2 bg-blue-100 rounded-lg flex items-center justify-center">
-            <span className="text-blue-600 font-bold text-xl">#</span>
-          </div>
-        </div>
-        <p className="text-3xl font-bold mt-2">{financialData.purchases.toLocaleString()}</p>
+      <div className="bg-white rounded-lg shadow p-6 transition duration-300 ease-in-out hover:shadow-lg hover:bg-blue-50">
+        <h3 className="text-gray-500 text-sm font-medium">Purchases</h3>
         <div className="flex items-center mt-2">
-          <span className="text-green-500 text-sm font-medium">{percentChange.purchases}</span>
-          <span className="text-gray-500 text-sm ml-2">from last month</span>
+          <p className="text-2xl font-bold">${financialData.purchases}</p>
+          <span className={`ml-2 px-2 py-1 rounded-full text-xs font-medium flex items-center ${getBadgeColor(percentChange.purchases, 'purchases')}`}>
+          {percentChange.purchases}
+            {percentChange.purchases.startsWith('+') ? (
+              <FaArrowTrendUp className="ml-1" />
+            ) : (
+              <FaArrowTrendDown className="ml-1" />
+            )}
+           
+          </span>
         </div>
       </div>
 
       {/* Revenue Card */}
-      <div className="bg-white rounded-lg shadow p-6">
-        <div className="flex items-center justify-between">
-          <h3 className="text-gray-500 text-sm font-medium">Revenue</h3>
-          <div className="p-2 bg-green-100 rounded-lg flex items-center justify-center">
-            <span className="text-green-600 font-bold text-xl">$</span>
-          </div>
-        </div>
-        <p className="text-3xl font-bold mt-2">{formatCurrency(financialData.revenue)}</p>
+      <div className="bg-white rounded-lg shadow p-6 transition duration-300 ease-in-out hover:shadow-lg hover:bg-green-50">
+        <h3 className="text-gray-500 text-sm font-medium">Revenue</h3>
         <div className="flex items-center mt-2">
-          <span className="text-green-500 text-sm font-medium">{percentChange.revenue}</span>
-          <span className="text-gray-500 text-sm ml-2">from last month</span>
+          <p className="text-2xl font-bold">{formatCurrencyWithK(financialData.revenue)}</p>
+          <span className={`ml-2 px-2 py-1 rounded-full text-xs font-medium flex items-center ${getBadgeColor(percentChange.revenue, 'revenue')}`}>
+          {percentChange.revenue}
+            {percentChange.revenue.startsWith('+') ? (
+              <FaArrowTrendUp className="ml-1" />
+            ) : (
+              <FaArrowTrendDown className="ml-1" />
+            )}
+           
+          </span>
         </div>
       </div>
 
       {/* Refunds Card */}
-      <div className="bg-white rounded-lg shadow p-6">
-        <div className="flex items-center justify-between">
-          <h3 className="text-gray-500 text-sm font-medium">Refunds</h3>
-          <div className="p-2 bg-red-100 rounded-lg flex items-center justify-center">
-            <span className="text-red-600 font-bold text-xl">↓</span>
-          </div>
-        </div>
-        <p className="text-3xl font-bold mt-2">{formatCurrency(financialData.refunds)}</p>
+      <div className="bg-white rounded-lg shadow p-6 transition duration-300 ease-in-out hover:shadow-lg hover:bg-red-50">
+        <h3 className="text-gray-500 text-sm font-medium">Refunds</h3>
         <div className="flex items-center mt-2">
-          <span className="text-red-500 text-sm font-medium">{percentChange.refunds}</span>
-          <span className="text-gray-500 text-sm ml-2">from last month</span>
+          <p className="text-2xl font-bold">{formatCurrencyWithK(financialData.refunds)}</p>
+          <span className="ml-2 px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-600 flex items-center">
+            {percentChange.refunds}
+            <FaArrowTrendUp className="ml-1" />
+          </span>
         </div>
       </div>
     </div>
+    </>
   );
 };
 

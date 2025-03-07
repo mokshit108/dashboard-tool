@@ -17,5 +17,9 @@ router.post('/monthly', DataController.addMonthlyData);
 router.get('/performance', DataController.getPerformanceData);
 router.post('/performance', DataController.addPerformanceData);
 
+// Sales data routes
+router.get('/sales', DataController.getSalesData);
+router.post('/sales', DataController.addSalesData);
+
 
 module.exports = router;

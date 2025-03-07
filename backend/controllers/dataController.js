@@ -141,6 +141,44 @@ async addPerformanceData(req, res) {
   }
 }
 
+ // Get Sales Data
+ async getSalesData(req, res) {
+  try {
+    const result = await DataModel.getAllSalesData();
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "No sales data found" });
+    }
+
+    res.status(200).json(result.rows);
+  } catch (error) {
+    console.error('Error getting sales data:', error);
+    res.status(500).json({ error: error.message });
+  }
+}
+
+// Add Sales Data
+async addSalesData(req, res) {
+  try {
+    const { date, web_sales, offline_sales } = req.body;
+
+    if (!date || web_sales === undefined || offline_sales === undefined) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
+    const result = await DataModel.addSalesData({
+      date,
+      web_sales,
+      offline_sales
+    });
+
+    res.status(201).json(result.rows[0]);
+  } catch (error) {
+    console.error('Error adding sales data:', error);
+    res.status(500).json({ error: error.message });
+  }
+}
+
 }
 
 module.exports = new DataController();

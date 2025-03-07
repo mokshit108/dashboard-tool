@@ -69,7 +69,7 @@ const PerformanceMeter = () => {
   const progressPath = getProgressPath(performanceData.score);
 
   return (
-    <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-6">
+    <div className="w-full max-w-md bg-white rounded-lg shadow-lg px-8 pt-4 pb-8">
       {loading ? (
         <div className="flex justify-center items-center h-48">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
@@ -81,7 +81,7 @@ const PerformanceMeter = () => {
       ) : (
         <div className="flex flex-col">
           {/* Half-circle meter */}
-          <div className="relative w-full flex justify-center mb-8">
+          <div className="relative w-full flex justify-center mb-4">
             <svg width="200" height="140" viewBox="0 0 200 140">
               {/* Decorative elements around the meter */}
               <circle cx="100" cy="100" r="85" fill="none" stroke="#f3f4f6" strokeWidth="2" strokeDasharray="4 2" />
@@ -115,8 +115,8 @@ const PerformanceMeter = () => {
               {/* Score display inside the half-circle */}
               <text
                 x="100"
-                y="75"
-                fontSize="24"
+                y="100"
+                fontSize="32"
                 fontWeight="bold"
                 textAnchor="middle"
                 fill="#00308F"
@@ -126,28 +126,28 @@ const PerformanceMeter = () => {
 
               <text
                 x="100"
-                y="95"
+                y="120"
                 fontSize="12"
                 textAnchor="middle"
                 fill="#6b7280"
               >
                 of 100 points
               </text>
-
-              {/* Horizontal line */}
-              <line x1="20" y1="130" x2="180" y2="130" stroke="#e5e7eb" strokeWidth="2" />
             </svg>
           </div>
 
+          {/* Horizontal divider line */}
+<hr className="w-full border-gray-200 mb-4" />
+
           {/* Title and message - left aligned */}
-          <div className="text-left mb-6">
-            <h2 className="text-xl font-bold text-gray-800 mb-2">{performanceData.title}</h2>
-            <p className="text-gray-600">{performanceData.message}</p>
+          <div className="text-left mt-4 mb-6">
+            <h2 className="text-xl font-bold text-gray-800 mb-3">{performanceData.title}</h2>
+            <p className="text-gray-600 text-sm">{performanceData.message}</p>
           </div>
 
           {/* Improve score button - left aligned with more curve */}
           <div className="text-left">
-            <button className="bg-white border border-gray-300 text-gray-700 py-2 px-6 rounded-full shadow-sm hover:bg-gray-50 transition-colors">
+            <button className="bg-white border border-gray-300 text-gray-900 text-sm font-semibold py-2 px-4 rounded-full shadow-sm hover:bg-gray-50 transition-colors">
               Improve your score
             </button>
           </div>

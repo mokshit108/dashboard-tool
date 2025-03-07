@@ -2724,7 +2724,7 @@ const seedData = async () => {
     const financialSummary = { purchases: 4294, revenue: 322000, refunds: 8200 };
 
     const performanceData = [
-        { score: 78, title: 'You`re Good!', message: 'Your sales performance score is better than 80% other users' }
+        { score: 78, title: "You're Good!", message: 'Your sales performance score is better than 80% other users' }
       ];
 
       const tweetStatisticsData = [

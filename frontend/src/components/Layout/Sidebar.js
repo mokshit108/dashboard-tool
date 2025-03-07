@@ -81,7 +81,7 @@ const Sidebar = () => {
   };
 
   return (
-    <Card className="h-screen bg-gray-50 w-60 flex-shrink-0 font-normal">
+    <Card className="h-screen bg-gray-50 w-56 flex-shrink-0 font-normal">
       {/* Company name/logo */}
       <div className="px-6 py-4 flex items-center border-b border-gray-200 gap-3">
       <GiMoebiusTriangle className="h-6 w-6"  />

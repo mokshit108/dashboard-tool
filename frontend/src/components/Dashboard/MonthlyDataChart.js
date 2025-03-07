@@ -275,7 +275,7 @@ const MonthlyDataChart = () => {
         </div>
 
       </div>
-      <div className="h-80">
+      <div className="h-72">
         <Bar data={chartData} options={chartOptions} />
       </div>
 

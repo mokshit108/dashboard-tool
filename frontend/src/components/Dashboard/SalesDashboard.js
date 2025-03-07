@@ -23,7 +23,7 @@ ChartJS.register(
   Legend
 );
 
-const SalesDataChart = () => {
+const CustomersDeviceChart = () => {
   const [salesData, setSalesData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -57,20 +57,14 @@ const SalesDataChart = () => {
     fetchSalesData();
   }, []);
 
-  // Format the date for display
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-  };
-
   // Prepare data for Chart.js with the requested colors
   const chartData = {
-    labels: salesData.map(data => formatDate(data.date)),
+    labels: salesData.map(() => ''), // Empty labels to remove Dec 13, Dec 14, etc.
     datasets: [
       {
         label: 'Web Sales',
         data: salesData.map(data => data.web_sales),
-        backgroundColor: '#007FFF', // Azure color as requested
+        backgroundColor: '#007FFF', // Azure color
         borderColor: '#007FFF',
         borderWidth: 2,
         tension: 0.4,
@@ -79,12 +73,12 @@ const SalesDataChart = () => {
         pointBorderColor: '#007FFF',
         pointBorderWidth: 1,
         pointHoverRadius: 6,
-        fill: false // No fill as requested
+        fill: false
       },
       {
         label: 'Offline Sales',
         data: salesData.map(data => data.offline_sales),
-        backgroundColor: '#7FFFD4', // Aquamarine color as requested
+        backgroundColor: '#7FFFD4', // Aquamarine color
         borderColor: '#7FFFD4',
         borderWidth: 2,
         tension: 0.4,
@@ -93,7 +87,7 @@ const SalesDataChart = () => {
         pointBorderColor: '#7FFFD4',
         pointBorderWidth: 1,
         pointHoverRadius: 6,
-        fill: false // No fill as requested
+        fill: false
       }
     ],
   };
@@ -103,18 +97,7 @@ const SalesDataChart = () => {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: 'top',
-        align: 'end',
-        labels: {
-          boxWidth: 12,
-          usePointStyle: true,
-          pointStyle: 'circle',
-          padding: 20,
-          font: {
-            family: "'Inter', sans-serif",
-            size: 12
-          }
-        }
+        display: false, // Hide the legend, as we'll show it below the chart
       },
       tooltip: {
         backgroundColor: 'rgba(255, 255, 255, 0.9)',
@@ -177,7 +160,7 @@ const SalesDataChart = () => {
           drawBorder: false,
         },
         min: 0,
-        max: 8000, // Setting max to 8k as requested
+        max: 8000,
         ticks: {
           font: {
             family: "'Inter', sans-serif",
@@ -185,7 +168,7 @@ const SalesDataChart = () => {
           },
           color: '#6B7280',
           padding: 10,
-          stepSize: 4000, // Steps of 4k as requested
+          stepSize: 4000,
           callback: function(value) {
             if (value === 0) return '0';
             if (value === 4000) return '4K';
@@ -219,7 +202,7 @@ const SalesDataChart = () => {
           <div className="h-6 bg-gray-200 rounded w-1/4"></div>
           <div className="h-4 bg-gray-200 rounded w-1/6"></div>
         </div>
-        <div className="h-64 bg-gray-200 rounded"></div>
+        <div className="h-52 bg-gray-200 rounded"></div>
       </div>
     );
   }
@@ -259,48 +242,34 @@ const SalesDataChart = () => {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 mt-6">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-semibold text-gray-800">Sales Channels</h2>
+    <div className="bg-white rounded-lg shadow-md mt-6">
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="px-6 pt-6 text-xl font-semibold text-gray-800">Customers by Device</h2>
       </div>
 
-      {/* Channel summary stats */}
-      {/* <div className="grid grid-cols-2 gap-4 mb-6">
-        <div className="bg-blue-50 rounded-lg p-4">
-          <div className="flex items-center">
-            <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#007FFF' }} ></div>
-            <span className="text-sm font-medium text-gray-700 ml-2">Web Sales</span>
-          </div>
-          <div className="mt-2 text-2xl font-bold text-gray-800">
-            {new Intl.NumberFormat('en-US', {
-              style: 'currency',
-              currency: 'USD',
-              minimumFractionDigits: 0,
-              maximumFractionDigits: 0
-            }).format(totalWebSales)}
-          </div>
-        </div>
-        <div className="bg-green-50 rounded-lg p-4">
-          <div className="flex items-center">
-            <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#7FFFD4' }}></div>
-            <span className="text-sm font-medium text-gray-700 ml-2">Offline Sales</span>
-          </div>
-          <div className="mt-2 text-2xl font-bold text-gray-800">
-            {new Intl.NumberFormat('en-US', {
-              style: 'currency',
-              currency: 'USD',
-              minimumFractionDigits: 0,
-              maximumFractionDigits: 0
-            }).format(totalOfflineSales)}
-          </div>
-        </div>
-      </div> */}
-
-      <div className="h-64">
+      <div className="h-52">
         <Line data={chartData} options={chartOptions} />
+      </div>
+
+      {/* Legend below the graph with square markers */}
+      <div className="flex justify-center space-x-8 pb-8">
+        <div className="flex flex-col">
+          <div className="flex items-center">
+            <span className="text-sm font-medium text-gray-700 mr-2">Web Sales</span>
+            <div className="w-3 h-3" style={{ backgroundColor: '#007FFF' }}></div>
+          </div>
+          <span className="text-sm items-start font-bold mt-1">1304%</span>
+        </div>
+        <div className="flex flex-col">
+          <div className="flex items-center">
+            <span className="text-sm font-medium text-gray-700 mr-2">Offline Sales</span>
+            <div className="w-3 h-3" style={{ backgroundColor: '#7FFFD4' }}></div>
+          </div>
+          <span className="text-sm items-start font-bold mt-1">473%</span>
+        </div>
       </div>
     </div>
   );
 };
 
-export default SalesDataChart;
+export default CustomersDeviceChart;

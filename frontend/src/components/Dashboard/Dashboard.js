@@ -2,6 +2,7 @@ import React from 'react';
 import FinancialSummary from './FinancialSummary';
 import MonthlyDataChart from './MonthlyDataChart';
 import PerformanceMeter from './PerformanceMeter';
+import SalesDashboard from './SalesDashboard';
 
 const Dashboard = () => {
   return (
@@ -16,6 +17,7 @@ const Dashboard = () => {
         </div>
         <div className="w-full lg:w-1/4 mt-4 lg:mt-0">
           <PerformanceMeter />
+          <SalesDashboard/>
         </div>
       </div>
     </div>

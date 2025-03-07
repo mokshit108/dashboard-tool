@@ -13,5 +13,9 @@ router.post('/financial', DataController.addFinancialSummary);
 router.get('/monthly', DataController.getMonthlyData);
 router.post('/monthly', DataController.addMonthlyData);
 
+// Performance data routes
+router.get('/performance', DataController.getPerformanceData);
+router.post('/performance', DataController.addPerformanceData);
+
 
 module.exports = router;

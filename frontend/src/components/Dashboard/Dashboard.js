@@ -1,38 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { fetchDashboardData } from '../../services/dataService';
-import MonthlyChart from './MonthlyChart';
-import DataTable from './DataTable';
+import React from 'react';
+import FinancialSummary from './FinancialSummary';
+import MonthlyDataChart from './MonthlyDataChart';
 
 const Dashboard = () => {
-  const [dashboardData, setDashboardData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  // useEffect(() => {
-  //   const loadData = async () => {
-  //     try {
-  //       const data = await fetchDashboardData();
-  //       setDashboardData(data);
-  //       setLoading(false);
-  //     } catch (err) {
-  //       setError('Failed to load dashboard data');
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   loadData();
-  // }, []);
-
-  // if (loading) return <div>Loading...</div>;
-  // if (error) return <div>{error}</div>;
-
   return (
-    <div className="dashboard p-6">
-      <h1 className="text-2xl font-bold mb-6">Dashboard Overview</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <MonthlyChart data={dashboardData} />
-        <DataTable data={dashboardData} />
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-2xl font-bold mb-6">Dashboard</h1>
+      
+      {/* Financial Summary Cards */}
+      <FinancialSummary />
+      
+      {/* Monthly Data Chart */}
+      <div className="mt-8">
+        <MonthlyDataChart />
       </div>
+      
+      {/* Add more components as needed */}
     </div>
   );
 };

@@ -5,7 +5,7 @@ require('dotenv').config();
 
 const app = express();
 const dataRoutes = require('./routes/dataRoutes');
-const DataModel = require('./models/dataModel'); // Import DataModel
+const DataModel = require('./models/dataModel');
 
 // Middleware
 app.use(cors());
@@ -17,13 +17,13 @@ app.use(bodyParser.json());
     await DataModel.createMonthlyDataTable();
     await DataModel.createProductTable();
     await DataModel.createSalesTable();
-    await DataModel.createFinancialSummaryTable(); // New table for purchases, revenue, refunds
+    await DataModel.createFinancialSummaryTable();
     await DataModel.createPerformanceTable();
     await DataModel.createTweetStatisticsTable();
     await DataModel.createFeedbackTable();
-    console.log('Tables created or already exist.');
+    console.log('Tables created or already exist.');    
   } catch (error) {
-    console.error('Error creating tables:', error.message);
+    console.error('Error creating tables or adding initial data:', error.message);
   }
 })();
 

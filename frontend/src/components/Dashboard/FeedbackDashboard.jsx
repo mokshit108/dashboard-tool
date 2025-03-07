@@ -76,7 +76,7 @@ const FeedbackDashboard = () => {
   if (loading) {
     return (
       <div className="bg-white rounded-lg shadow p-4 mb-4">
-        <h2 className="text-lg font-semibold mb-4">Community Feedback</h2>
+        <h2 className="text-sm font-semibold mb-4 text-gray-500">Community Feedback</h2>
         <div className="flex justify-center items-center p-6">
           <p>Loading feedback data...</p>
         </div>
@@ -87,7 +87,7 @@ const FeedbackDashboard = () => {
   if (error) {
     return (
       <div className="bg-white rounded-lg shadow p-4 mb-4">
-        <h2 className="text-lg font-semibold mb-4">Community Feedback</h2>
+        <h2 className="text-sm font-semibold mb-4 text-gray-500">Community Feedback</h2>
         <div className="flex justify-center items-center p-6 text-red-500">
           <p>{error}</p>
         </div>
@@ -98,47 +98,43 @@ const FeedbackDashboard = () => {
   const percentages = calculateSentimentPercentages();
 
   return (
-    <div className="bg-white rounded-lg shadow p-4 mb-4 mt-6">
-      <h2 className="text-lg font-semibold mb-4">Community Feedback</h2>
-      <h3 className="text-md font-medium mb-4 text-left">{getSentimentStatus()}</h3>
+    <div className="bg-white rounded-lg shadow p-6 mb-4 mt-6">
+      <h2 className="text-sm font-semibold mb-2 text-gray-500">Community Feedback</h2>
+      <h3 className="text-lg font-medium mb-4 text-left">{getSentimentStatus()}</h3>
 
       {/* Percentage Bar */}
       <div className="w-full h-2 bg-gray-200 rounded-full mb-4 flex overflow-hidden gap-1">
-  {percentages.negative > 0 && (
-    <div 
-      className="h-full bg-red-500 rounded-full mx-[1px]" 
-      style={{ width: `${percentages.negative}%` }}
-    ></div>
-  )}
-  {percentages.neutral > 0 && (
-    <div 
-      className="h-full bg-yellow-500 rounded-full mx-[1px]" 
-      style={{ width: `${percentages.neutral}%` }}
-    ></div>
-  )}
-  {percentages.positive > 0 && (
-    <div 
-      className="h-full bg-green-500 rounded-full mx-[1px]" 
-      style={{ width: `${percentages.positive}%` }}
-    ></div>
-  )}
-</div>
-
+        {percentages.negative > 0 && (
+          <div 
+            className="h-full bg-red-500 rounded-full mx-[1px]" 
+            style={{ width: `${percentages.negative}%` }}
+          ></div>
+        )}
+        {percentages.neutral > 0 && (
+          <div 
+            className="h-full bg-yellow-500 rounded-full mx-[1px]" 
+            style={{ width: `${percentages.neutral}%` }}
+          ></div>
+        )}
+        {percentages.positive > 0 && (
+          <div 
+            className="h-full bg-green-500 rounded-full mx-[1px]" 
+            style={{ width: `${percentages.positive}%` }}
+          ></div>
+        )}
+      </div>
 
       {/* Legend and Counts */}
-      <div className="grid grid-cols-3 gap-2 mb-4">
-        <div className="flex flex-col items-center">
-         
+      <div className="grid grid-cols-3 mb-4">
+        <div className="flex flex-col items-left">
           <span className="text-xs text-gray-600">Negative</span>
           <span className="font-medium text-gray-800">{stats.negative}</span>
         </div>
-        <div className="flex flex-col items-center">
-       
+        <div className="flex flex-col items-left">
           <span className="text-xs text-gray-600">Neutral</span>
           <span className="font-medium text-gray-800">{stats.neutral}</span>
         </div>
-        <div className="flex flex-col items-center">
-        
+        <div className="flex flex-col items-left">
           <span className="text-xs text-gray-600">Positive</span>
           <span className="font-medium text-gray-800">{stats.positive}</span>
         </div>

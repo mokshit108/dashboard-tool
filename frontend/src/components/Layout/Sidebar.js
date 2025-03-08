@@ -1,6 +1,6 @@
 // src/components/Layout/Sidebar.js
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { 
   FaHome, 
@@ -9,10 +9,10 @@ import {
   FaBolt, 
   FaUsers, 
   FaCog, 
-  FaUserFriends 
+  FaUserFriends,
+  FaSignOutAlt
 } from 'react-icons/fa';
 import { GiMoebiusTriangle } from "react-icons/gi";
-
 
 import { CgProfile } from "react-icons/cg";
 import { IoSettingsOutline } from "react-icons/io5";
@@ -31,6 +31,7 @@ const Card = ({ children, className }) => (
 
 const Sidebar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   
   // Navigation items with FontAwesome icons and paths
   const navItems = [
@@ -80,11 +81,20 @@ const Sidebar = () => {
     return location.pathname === path;
   };
 
+  // Handle logout
+  const handleLogout = () => {
+    // Clear user data from localStorage
+    localStorage.removeItem('user');
+    
+    // Redirect to login page
+    navigate('/login');
+  };
+
   return (
-    <Card className="h-screen bg-gray-50 w-56 flex-shrink-0 font-normal font-nunito">
+    <Card className="h-screen bg-gray-50 w-56 flex-shrink-0 font-normal font-nunito flex flex-col">
       {/* Company name/logo */}
       <div className="px-6 py-4 flex items-center border-b border-gray-200 gap-3">
-      <GiMoebiusTriangle className="h-6 w-6"  />
+        <GiMoebiusTriangle className="h-6 w-6"  />
         <h1 className="text-xl font-bold text-black">Salesway</h1>
       </div>
 
@@ -120,7 +130,7 @@ const Sidebar = () => {
             <li key={index}>
               <Link
                 to={item.path}
-                className={`flex text-center pl-4  items-center px-2 py-2 text-md rounded-md group 
+                className={`flex text-center pl-4 items-center px-2 py-2 text-md rounded-md group 
                 ${isActive(item.path) 
                   ? 'bg-white text-gray-900 font-semibold font-sans border border-gray-100 shadow-sm' 
                   : 'text-gray-600 hover:bg-gray-100'}`}
@@ -133,6 +143,19 @@ const Sidebar = () => {
             </li>
           ))}
         </ul>
+      </div>
+
+      {/* Logout button (at the bottom) */}
+      <div className="mt-auto px-6 py-4 border-t border-gray-200">
+        <button
+          onClick={handleLogout}
+          className="flex items-center px-2 py-2 w-full text-md rounded-md text-gray-600 hover:bg-gray-100"
+        >
+          <span className="mr-3 text-gray-500">
+            <FaSignOutAlt className="h-5 w-5" />
+          </span>
+          Logout
+        </button>
       </div>
     </Card>
   );

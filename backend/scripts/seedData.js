@@ -4769,6 +4769,13 @@ const seedData = async () => {
     console.log('Inserting feedback data...');
     await DataModel.insertFeedback(feedbackData.negative, feedbackData.positive, feedbackData.neutral);
 
+    console.log('Creating user table...');
+    await DataModel.createUserTable();
+
+    // After inserting other data:
+    console.log('Inserting user data...');
+    await DataModel.insertUser('trial', 'assignment123');
+
     console.log('✅ Data inserted successfully!');
     process.exit(); // Exit after execution
   } catch (error) {

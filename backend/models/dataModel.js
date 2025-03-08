@@ -180,6 +180,38 @@ class DataModel {
   }
 
   
+async createUserTable() {
+  const createTableQuery = `
+    CREATE TABLE IF NOT EXISTS users (
+      id SERIAL PRIMARY KEY,
+      username VARCHAR(50) UNIQUE NOT NULL,
+      password VARCHAR(100) NOT NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+  `;
+  await db.query(createTableQuery);
+}
+
+async insertUser(username, password) {
+  // In a production environment, you should hash the password
+  // For this demo, we're storing it as plain text
+  const insertQuery = `
+    INSERT INTO users (username, password)
+    VALUES ($1, $2)
+    ON CONFLICT (username) DO NOTHING
+    RETURNING id, username, created_at
+  `;
+  return db.query(insertQuery, [username, password]);
+}
+
+async getUserByUsername(username) {
+  const query = `
+    SELECT * FROM users WHERE username = $1
+  `;
+  const result = await db.query(query, [username]);
+  return result.rows[0];
+}
+  
 
 }
 

@@ -5,6 +5,7 @@ require('dotenv').config();
 
 const app = express();
 const dataRoutes = require('./routes/dataRoutes');
+const authRoutes = require('./routes/authRoutes');
 const DataModel = require('./models/dataModel');
 
 // Middleware
@@ -21,6 +22,7 @@ app.use(bodyParser.json());
     await DataModel.createPerformanceTable();
     await DataModel.createTweetStatisticsTable();
     await DataModel.createFeedbackTable();
+    await DataModel.createUserTable();
     console.log('Tables created or already exist.');    
   } catch (error) {
     console.error('Error creating tables or adding initial data:', error.message);
@@ -29,6 +31,7 @@ app.use(bodyParser.json());
 
 // Routes
 app.use('/api', dataRoutes);
+app.use('/auth', authRoutes);
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {

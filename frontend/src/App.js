@@ -31,7 +31,7 @@ function App() {
 
           {/* Private Routes with Layout */}
           <Route>
-            <Route element={<LayoutRoute />}>
+            <Route element={<LayoutRoute />} >
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/campaigns" element={<div>Campaigns Page</div>} />
               <Route path="/flows" element={<div>Flows Page</div>} />

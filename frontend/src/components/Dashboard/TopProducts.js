@@ -36,7 +36,7 @@ const TopProducts = () => {
       
       {/* Full Results button */}
       <div className="absolute top-4 right-4">
-        <span className="px-4 py-3 text-sm bg-white border font-semibold text-gray-500 border-gray-300 rounded-full">
+        <span className="px-4 py-3 hover:bg-gray-100 hover:text-gray-400 text-sm bg-white border font-semibold text-black border-gray-300 rounded-full">
           Full Results
         </span>
       </div>
@@ -62,25 +62,25 @@ const TopProducts = () => {
               </th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+          <tbody className="bg-white">
             {productData.map((item, index) => (
               <tr 
                 key={index} 
                 className="hover:bg-gray-50 transition-colors duration-150"
               >
-                <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-black">
+                <td className="px-6 py-3 whitespace-nowrap text-md font-medium text-black">
                   {item.product}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-md text-gray-500">
+                <td className="px-6 py-3 whitespace-nowrap text-md text-gray-500">
                   {item.sold_amount}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-md text-gray-500">
-                  ${item.unit_price}
+                <td className="px-6 py-3 whitespace-nowrap text-md text-gray-500">
+                  ${Math.floor(item.unit_price)}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-md text-gray-500">
-                  ${item.revenue.toLocaleString()}
+                <td className="px-6 py-3 whitespace-nowrap text-md text-gray-500">
+                  ${Math.floor(item.revenue).toLocaleString()}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-md text-black flex items-center">
+                <td className="px-6 py-3 whitespace-nowrap text-md text-black flex items-center">
                   <FaStar className='text-yellow-500 mr-1 h-3 w-3' />
                   {item.rating}
                 </td>

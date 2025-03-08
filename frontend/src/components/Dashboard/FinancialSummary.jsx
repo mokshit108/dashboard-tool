@@ -114,7 +114,7 @@ const FinancialSummary = () => {
 
   return (
     <>
-    <h1 className="text-2xl font-bold mb-6">Dashboard</h1>
+    <h1 className="text-2xl font-bold mb-6 mt-2">Dashboard</h1>
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
       
       {/* Purchases Card */}

@@ -69,7 +69,7 @@ const PerformanceMeter = () => {
   const progressPath = getProgressPath(performanceData.score);
 
   return (
-    <div className="w-full max-w-md bg-white rounded-lg shadow-lg px-8 pt-4 pb-8">
+    <div className="w-full max-w-md bg-white rounded-lg shadow-lg px-8 pt-4 pb-8 transition-all duration-300 hover:shadow-xl hover:transform hover:scale-105">
       {loading ? (
         <div className="flex justify-center items-center h-48">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
@@ -137,7 +137,7 @@ const PerformanceMeter = () => {
           </div>
 
           {/* Horizontal divider line */}
-<hr className="w-full border-gray-200 mb-4" />
+          <hr className="w-full border-gray-200 mb-4" />
 
           {/* Title and message - left aligned */}
           <div className="text-left mt-4 mb-6">
@@ -147,7 +147,7 @@ const PerformanceMeter = () => {
 
           {/* Improve score button - left aligned with more curve */}
           <div className="text-left">
-            <button className="bg-white border border-gray-300 text-gray-900 text-sm font-semibold py-2 px-4 rounded-full shadow-sm hover:bg-gray-50 transition-colors">
+            <button className="bg-white border hover:bg-gray-100 hover:text-gray-400 border-gray-300 text-gray-900 text-sm font-semibold py-2 px-4 rounded-full shadow-sm hover:border-gray-400 transition-all">
               Improve your score
             </button>
           </div>

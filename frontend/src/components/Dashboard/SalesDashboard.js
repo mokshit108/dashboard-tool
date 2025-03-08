@@ -242,9 +242,9 @@ const CustomersDeviceChart = () => {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-md mt-6">
+    <div className="bg-white rounded-lg shadow-md mt-6 transition-all duration-300 hover:shadow-xl hover:transform hover:scale-105">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="px-6 pt-6 text-xl font-semibold text-gray-800">Customers by Device</h2>
+        <h2 className="px-8 pt-8 pb-4 text-xl font-semibold text-gray-800">Customers by Device</h2>
       </div>
 
       <div className="h-52">
@@ -252,17 +252,17 @@ const CustomersDeviceChart = () => {
       </div>
 
       {/* Legend below the graph with square markers */}
-      <div className="flex justify-center space-x-8 pb-8">
+      <div className="flex justify-center space-x-8 pb-10">
         <div className="flex flex-col">
           <div className="flex items-center">
-            <span className="text-sm font-medium text-gray-700 mr-2">Web Sales</span>
+            <span className="text-sm font-normal text-gray-700 mr-2">Web Sales</span>
             <div className="w-3 h-3" style={{ backgroundColor: '#007FFF' }}></div>
           </div>
           <span className="text-sm items-start font-bold mt-1">1304%</span>
         </div>
         <div className="flex flex-col">
           <div className="flex items-center">
-            <span className="text-sm font-medium text-gray-700 mr-2">Offline Sales</span>
+            <span className="text-sm font-normal text-gray-700 mr-2">Offline Sales</span>
             <div className="w-3 h-3" style={{ backgroundColor: '#7FFFD4' }}></div>
           </div>
           <span className="text-sm items-start font-bold mt-1">473%</span>

@@ -33,8 +33,9 @@ const CustomersDeviceChart = () => {
   useEffect(() => {
     const fetchSalesData = async () => {
       try {
+        const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
         // Fetch sales data from the API
-        const response = await axios.get('http://localhost:8000/api/sales');
+        const response = await axios.get(`${API_BASE_URL}/api/sales`);
 
         if (response.data && response.data.length > 0) {
           setSalesData(response.data);

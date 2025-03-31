@@ -9,8 +9,9 @@ const TopProducts = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/products');
-        
+        const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+        const response = await fetch(`${API_BASE_URL}/api/products`);
+
         if (!response.ok) {
           throw new Error('Failed to fetch product data');
         }
@@ -33,14 +34,14 @@ const TopProducts = () => {
   return (
     <div className="bg-white p-4 mb-6 relative">
       <h2 className="text-xl font-bold mb-4">Top Products</h2>
-      
+
       {/* Full Results button */}
       <div className="absolute top-4 right-4">
         <span className="px-4 py-3 hover:bg-gray-100 hover:text-gray-400 text-sm bg-white border font-semibold text-black border-gray-300 rounded-full">
           Full Results
         </span>
       </div>
-      
+
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y mt-3 divide-gray-200">
           <thead>
@@ -64,8 +65,8 @@ const TopProducts = () => {
           </thead>
           <tbody className="bg-white">
             {productData.map((item, index) => (
-              <tr 
-                key={index} 
+              <tr
+                key={index}
                 className="hover:bg-gray-50 transition-colors duration-150"
               >
                 <td className="px-6 py-3 whitespace-nowrap text-md font-medium text-black">

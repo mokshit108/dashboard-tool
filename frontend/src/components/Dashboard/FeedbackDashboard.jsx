@@ -10,7 +10,8 @@ const FeedbackDashboard = () => {
   useEffect(() => {
     const fetchFeedback = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/feedback");
+        const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+        const response = await axios.get(`${API_BASE_URL}/api/feedback`);
         console.log("Fetched Feedback Data:", response.data);
 
         if (response.data.length > 0) {
@@ -61,7 +62,7 @@ const FeedbackDashboard = () => {
 
   const getSentimentStatus = () => {
     const percentages = calculateSentimentPercentages();
-    
+
     if (percentages.positive > percentages.neutral && percentages.positive > percentages.negative) {
       return "Mostly Positive";
     } else if (percentages.negative > percentages.neutral && percentages.negative > percentages.positive) {
@@ -105,20 +106,20 @@ const FeedbackDashboard = () => {
       {/* Percentage Bar */}
       <div className="w-full h-2 bg-gray-200 rounded-full mb-4 flex overflow-hidden gap-1">
         {percentages.negative > 0 && (
-          <div 
-            className="h-full bg-red-500 rounded-full mx-[1px]" 
+          <div
+            className="h-full bg-red-500 rounded-full mx-[1px]"
             style={{ width: `${percentages.negative}%` }}
           ></div>
         )}
         {percentages.neutral > 0 && (
-          <div 
-            className="h-full bg-yellow-500 rounded-full mx-[1px]" 
+          <div
+            className="h-full bg-yellow-500 rounded-full mx-[1px]"
             style={{ width: `${percentages.neutral}%` }}
           ></div>
         )}
         {percentages.positive > 0 && (
-          <div 
-            className="h-full bg-green-500 rounded-full mx-[1px]" 
+          <div
+            className="h-full bg-green-500 rounded-full mx-[1px]"
             style={{ width: `${percentages.positive}%` }}
           ></div>
         )}

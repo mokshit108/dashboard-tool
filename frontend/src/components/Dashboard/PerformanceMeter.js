@@ -15,7 +15,8 @@ const PerformanceMeter = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await axios.get('http://localhost:8000/api/performance');
+        const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+        const response = await axios.get(`${API_BASE_URL}/api/performance`);
         if (response.data && response.data.length > 0) {
           setPerformanceData(response.data[0]);
         }

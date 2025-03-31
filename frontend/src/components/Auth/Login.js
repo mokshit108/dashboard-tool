@@ -27,16 +27,17 @@ const Login = () => {
     setError('');
 
     try {
-      const response = await axios.post('http://localhost:8000/auth/login', credentials);
-      
+      const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+      const response = await axios.post(`${API_BASE_URL}/auth/login`, credentials);
+
       // Store user info in localStorage (in a real app, you'd store the JWT token)
       localStorage.setItem('user', JSON.stringify(response.data.user));
-      
+
       // Redirect to dashboard
       navigate('/dashboard');
     } catch (error) {
       setError(
-        error.response?.data?.message || 
+        error.response?.data?.message ||
         'An error occurred during login. Please try again.'
       );
     } finally {
@@ -48,15 +49,15 @@ const Login = () => {
     <div className="login-container">
       <div className="login-card">
         <h2>Login</h2>
-        
+
         <div className="credentials-note">
           <p><strong>Note:</strong></p>
           <p><strong>Username:</strong> trial</p>
           <p><strong>Password:</strong> assignment123</p>
         </div>
-        
+
         {error && <div className="error-message">{error}</div>}
-        
+
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="username">Username</label>
@@ -69,7 +70,7 @@ const Login = () => {
               required
             />
           </div>
-          
+
           <div className="form-group">
             <label htmlFor="password">Password</label>
             <input
@@ -81,9 +82,9 @@ const Login = () => {
               required
             />
           </div>
-          
-          <button 
-            type="submit" 
+
+          <button
+            type="submit"
             className="login-button"
             disabled={loading}
           >

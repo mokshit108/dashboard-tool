@@ -2,21 +2,27 @@ const { Pool } = require('pg');
 require('dotenv').config();
 
 class Database {
+
   constructor() {
-    // this.pool = new Pool({
+     // this.pool = new Pool({
     //   host: process.env.DB_HOST,
     //   user: process.env.DB_USER,
     //   password: process.env.DB_PASSWORD,
     //   database: process.env.DB_NAME,
     //   port: process.env.DB_PORT
     // });
-
+    
+    // Configuration specifically for Neon PostgreSQL
     this.pool = new Pool({
       host: process.env.PGHOST,
       user: process.env.PGUSER,
       password: process.env.PGPASSWORD,
       database: process.env.PGDATABASE,
-      port: process.env.DB_PORT
+      port: process.env.DB_PORT || 5432,
+      ssl: {
+        rejectUnauthorized: false,
+        sslmode: 'require'
+      }
     });
 
     // Bind error handler to pool
